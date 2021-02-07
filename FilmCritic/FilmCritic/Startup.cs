@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace FilmCritic
 {
@@ -23,6 +25,9 @@ namespace FilmCritic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var client = new MongoClient("mongodb://192.168.99.100:27017");
+            services.AddScoped(x => client.GetDatabase("test"));
+
             services.AddControllersWithViews();
         }
 
