@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +27,13 @@ namespace FilmCritic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Auth/Login";
+                });
+
+            var client = new MongoClient("mongodb://192.168.99.100:27017");
             services.AddScoped(x => client.GetDatabase("test"));
 
             services.AddControllersWithViews();
@@ -47,8 +55,16 @@ namespace FilmCritic
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //var cookiePolicyOptions = new CookiePolicyOptions
+            //{
+            //    MinimumSameSitePolicy = SameSiteMode.Strict,
+            //};
+
+            //app.UseCookiePolicy(cookiePolicyOptions);
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
