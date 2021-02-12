@@ -1,0 +1,28 @@
+﻿@model FilmCritic.Controllers.FilmController
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="container">
+    <h1>@Model.Film.Title</h1>
+    <div class="row mt-3">
+        <div class="w-75 pr-5">
+            <div class="d-flex justify-content-between w-50">
+                <h5 class="text-secondary">Year:</h5>
+                <h5>@Model.Film.Year</h5>
+            </div>
+            <div class="d-flex justify-content-between w-50">
+                <h5 class="text-secondary">Director:</h5>
+                <h5>@Model.Film.Director</h5>
+            </div>
+            <div class="w-100">
+                <h5 class="text-secondary">Storyline:</h5>
+                <h5 class="text-justify">@Model.Film.Storyline</h5>
+            </div>
+        </div>
+        <div>
+            <img src="@Model.Film.Poster" class="img-fluid shadow" alt="Responsive image">
+        </div>
+    </div>
+</div>

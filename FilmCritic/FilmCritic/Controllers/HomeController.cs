@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using FilmCritic.Models;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 
 namespace FilmCritic.Controllers
 {
@@ -15,6 +16,8 @@ namespace FilmCritic.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IMongoDatabase _mongoDB;
+
+        public List<Film> Films { get; set; }
 
         public HomeController(ILogger<HomeController> logger, IMongoDatabase mongoDB)
         {
@@ -24,17 +27,22 @@ namespace FilmCritic.Controllers
 
         public IActionResult Index()
         {
-            var collection = _mongoDB.GetCollection<BsonDocument>("people");
+            GetFirstFilms(12);
+            return View(this);
+        }
 
-
-            var list = collection.Find(new BsonDocument())
-                .ToList();
-
-            foreach (var document in list)
+        private void GetFirstFilms(int v)
+        {
+            Films = new List<Film>();
+            var films = _mongoDB.GetCollection<BsonDocument>("films").Find(_ => true).ToList();
+            for (int i = 0; i < v; i++)
             {
-                Console.WriteLine(document["ime"]);
+                if (i == films.Count)
+                {
+                    break;
+                }
+                Films.Add(BsonSerializer.Deserialize<Film>(films[i]));
             }
-            return View();
         }
 
         public IActionResult Privacy()

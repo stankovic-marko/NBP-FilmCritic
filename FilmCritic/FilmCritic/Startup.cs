@@ -25,7 +25,7 @@ namespace FilmCritic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var client = new MongoClient("mongodb://192.168.99.100:27017");
+            var client = new MongoClient("mongodb://localhost:27017");
             services.AddScoped(x => client.GetDatabase("test"));
 
             services.AddControllersWithViews();

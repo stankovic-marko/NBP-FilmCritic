@@ -1,0 +1,56 @@
+[
+	{
+		"Title": "Clockwork Orange",
+		"Director": "Stanley Kubrick",
+		"Year": 1971,
+		"Storyline": "Protagonist Alex DeLarge is an 'ultraviolent' youth in futuristic Britain. As with all luck, his eventually runs out and he's arrested and convicted of murder. While in prison, Alex learns of an experimental program in which convicts are programmed to detest violence. If he goes through the program, his sentence will be reduced and he will be back on the streets sooner than expected. But Alex's ordeals are far from over once he hits the streets of Britain.",
+		"Poster": "https://upload.wikimedia.org/wikipedia/en/7/73/A_Clockwork_Orange_%281971%29.png"
+	},
+	{
+		"Title": "Pulp Fiction",
+		"Director": "Quentin Tarantino",
+		"Year": 1994,
+		"Storyline": "Jules Winnfield (Samuel L. Jackson) and Vincent Vega (John Travolta) are two hit men who are out to retrieve a suitcase stolen from their employer, mob boss Marsellus Wallace (Ving Rhames). Wallace has also asked Vincent to take his wife Mia (Uma Thurman) out a few days later when Wallace himself will be out of town. Butch Coolidge (Bruce Willis) is an aging boxer who is paid by Wallace to lose his fight. The lives of these seemingly unrelated people are woven together comprising of a series of funny, bizarre and uncalled-for incidents.",
+		"Poster": "https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg"
+	}
+	,
+	{
+		"Title": "Interstellar",
+		"Director": "Christopher Nolan",
+		"Year": 2014,
+		"Storyline": "Earth's future has been riddled by disasters, famines, and droughts. There is only one way to ensure mankind's survival: Interstellar travel. A newly discovered wormhole in the far reaches of our solar system allows a team of astronauts to go where no man has gone before, a planet that may have the right environment to sustain human life.",
+		"Poster": "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg"
+	}
+	,
+	{
+		"Title": "The Godfather",
+		"Director": "Francis Ford Coppola",
+		"Year": 1972,
+		"Storyline": "The Godfather 'Don' Vito Corleone is the head of the Corleone mafia family in New York. He is at the event of his daughter's wedding. Michael, Vito's youngest son and a decorated WW II Marine is also present at the wedding. Michael seems to be uninterested in being a part of the family business. Vito is a powerful man, and is kind to all those who give him respect but is ruthless against those who do not. But when a powerful and treacherous rival wants to sell drugs and needs the Don's influence for the same, Vito refuses to do it. What follows is a clash between Vito's fading old values and the new ways which may cause Michael to do the thing he was most reluctant in doing and wage a mob war against all the other mafia families which could tear the Corleone family apart.",
+		"Poster": "https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg"
+	}
+	,
+	{
+		"Title": "The Shawshank Redemption",
+		"Director": "Frank Darabont",
+		"Year": 1994,
+		"Storyline": "Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit. The film portrays the man's unique way of dealing with his new, torturous life; along the way he befriends a number of fellow prisoners, most notably a wise long-term inmate named Red.",
+		"Poster": "https://upload.wikimedia.org/wikipedia/sh/8/81/ShawshankRedemptionMoviePoster.jpg"
+	}
+	,
+	{
+		"Title": "Fight Club",
+		"Director": "David Fincher",
+		"Year": 1999,
+		"Storyline": "A nameless first person narrator (Edward Norton) attends support groups in attempt to subdue his emotional state and relieve his insomniac state. When he meets Marla (Helena Bonham Carter), another fake attendee of support groups, his life seems to become a little more bearable. However when he associates himself with Tyler (Brad Pitt) he is dragged into an underground fight club and soap making scheme. Together the two men spiral out of control and engage in competitive rivalry for love and power. When the narrator is exposed to the hidden agenda of Tyler's fight club, he must accept the awful truth that Tyler may not be who he says he is.",
+		"Poster": "https://upload.wikimedia.org/wikipedia/en/f/fc/Fight_Club_poster.jpg"
+	}
+	,
+	{
+		"Title": "The Prestige",
+		"Director": "Christopher Nolan",
+		"Year": 2006,
+		"Storyline": "In the end of the nineteenth century, in London, Robert Angier, his beloved wife Julia McCullough, and Alfred Borden are friends and assistants of a magician. When Julia accidentally dies during a performance, Robert blames Alfred for her death, and they become enemies. Both become famous and rival magicians, sabotaging the performance of the other on the stage. When Alfred performs a successful trick, Robert becomes obsessed trying to disclose the secret of his competitor with tragic consequences.",
+		"Poster": "https://upload.wikimedia.org/wikipedia/en/d/d2/Prestige_poster.jpg"
+	}
+]

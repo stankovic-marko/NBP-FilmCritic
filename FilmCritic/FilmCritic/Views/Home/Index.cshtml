@@ -1,8 +1,20 @@
-﻿@{
+﻿@model FilmCritic.Controllers.HomeController
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row">
+        @{
+            foreach (var film in Model.Films)
+            {
+                <div class="col-3 mt-3" href="/film/detail/?id=@film.Id">
+                    <a class="d-flex align-items-center flex-column" style="color: inherit" href="/film/detail/?id=@film.Id">
+                        <p class="mb-1">@film.Title</p>
+                        <img class="film-poster" src="@film.Poster" style="height:250px">
+                    </a>
+                </div>
+            }
+        }
+    </div>
 </div>
