@@ -22,5 +22,7 @@ namespace FilmCritic.Models
         public int Year { get; set; }
         [BsonElement("Poster")]
         public string Poster { get; set; }
+        [BsonElement("PosterId")]
+        public ObjectId PosterId { get; set; }
     }
 }
