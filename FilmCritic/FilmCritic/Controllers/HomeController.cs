@@ -17,6 +17,11 @@ namespace FilmCritic.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IMongoDatabase _mongoDB;
 
+        [BindProperty]
+        public string SearchType { get; set; }
+        [BindProperty]
+        public string SearchKeyword { get; set; }
+
         public List<Film> Films { get; set; }
 
         public HomeController(ILogger<HomeController> logger, IMongoDatabase mongoDB)

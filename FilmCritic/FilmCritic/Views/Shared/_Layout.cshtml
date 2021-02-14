@@ -21,6 +21,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <li class="nav-item ml-auto">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button class="input-group-text btn btn-primary" onclick="search()" id="">Search</button>
+                                    </div>
+                                    <input id="searchKeyword" type="text" class="form-control">
+                                    <select id="searchType" class="form-select" aria-label="Default select example">
+                                        <option value="" selected>Search by</option>
+                                        <option value="Title">Title</option>
+                                        <option value="Year">Year</option>
+                                        <option value="Director">Director</option>
+                                    </select>
+                                </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -43,3 +60,9 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+@section Scripts{
+    <script type="text/javascript">
+            alert("I'm a view.");
+    </script>
+}
