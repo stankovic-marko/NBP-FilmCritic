@@ -31,6 +31,7 @@ namespace FilmCritic
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/Auth/Login";
+                    options.AccessDeniedPath = "/Auth/AccessDenied";
                 });
 
             var client = new MongoClient("mongodb://192.168.99.100:27017");

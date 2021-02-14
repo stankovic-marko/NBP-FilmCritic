@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FilmCritic.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
@@ -41,6 +42,58 @@ namespace FilmCritic.Controllers
             ObjectId o_id = new ObjectId(id);
             var film = films.Find($"{{ _id: ObjectId('{o_id}') }}").FirstOrDefault();
             Film = BsonSerializer.Deserialize<Film>(film);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize (Roles = "Administrator")]
+        public IActionResult Create([FromForm] CreateFilmModel createFilmModel)
+        {
+
+            var films = _mongoDB.GetCollection<BsonDocument>("films");
+            var posters = _mongoDB.GetCollection<BsonDocument>("posters");
+
+            var toAdd = new Film()
+            {
+                Director = createFilmModel.Director,
+                Storyline = createFilmModel.Storyline,
+                Title = createFilmModel.Title,
+                Year = createFilmModel.Year
+            };
+
+            byte[] posterBytes = new byte[createFilmModel.PosterFile.Length];
+            createFilmModel.PosterFile.OpenReadStream().Read(posterBytes, 0, (int) createFilmModel.PosterFile.Length);
+
+            var posterId = ObjectId.GenerateNewId();
+            var posterToAdd = new PosterModel()
+            {
+                Image = posterBytes,
+                Id = posterId,
+            };
+
+            posters.InsertOneAsync(posterToAdd.ToBsonDocument());
+
+            toAdd.PosterId = posterId;
+
+            films.InsertOneAsync(toAdd.ToBsonDocument());
+
+            return Redirect("/");
+        }
+
+        [HttpGet]
+        [Route("poster/{posterId}")]
+        public IActionResult Poster(string posterId)
+        {
+            var posters = _mongoDB.GetCollection<BsonDocument>("posters");
+            var posterBson = posters.Find($"{{ _id: ObjectId('{posterId}') }}").FirstOrDefault();
+            PosterModel poster = BsonSerializer.Deserialize<PosterModel>(posterBson);
+
+            return File(poster.Image, "image/jpeg");
         }
     }
 }
