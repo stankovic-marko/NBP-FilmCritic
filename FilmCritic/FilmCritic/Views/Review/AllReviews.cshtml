@@ -1,0 +1,42 @@
+﻿@model FilmCritic.Controllers.ReviewController
+
+    <div class="container">
+        <h1>Reviews for @Model.Film.Title</h1>
+
+        <div class="d-flex justify-content-center">
+            <h5>Page:</h5>
+            <nav class="ml-2" aria-label="Page navigation example">
+                <ul class="pagination">
+                    @for (int i = 0; i < (Model.ReviewsCount % 5 == 0 ? Model.ReviewsCount / 5 : Model.ReviewsCount / 5 + 1); i++)
+                    {
+                        if (Model.CurrentPage == i)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link" href="/review/allreviews/?id=@Model.Film.Id&page=@(i+1)">@(i+1) <span class="sr-only">@i</span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" href="/review/allreviews/?id=@Model.Film.Id&page=@(i+1)">@(i+1)</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+
+        <div>
+            @{
+                foreach (var review in Model.Reviews)
+                {
+                    <div class="w-100 p-3 shadow-sm rounded mt-3" style="background-color: @(review.IsPositive? "#abff9e" : "#ff9e9e")">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="text-secondary">User [Username] said:</h5>
+                            <h5 class="text-secondary">@review.Time</h5>
+                        </div>
+                        <h5>@review.Comment</h5>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>

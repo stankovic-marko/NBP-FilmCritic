@@ -34,7 +34,7 @@ namespace FilmCritic
                     options.AccessDeniedPath = "/Auth/AccessDenied";
                 });
 
-            var client = new MongoClient("mongodb://192.168.99.100:27017");
+            var client = new MongoClient("mongodb://localhost:27017");
             services.AddScoped(x => client.GetDatabase("test"));
 
             services.AddControllersWithViews();
