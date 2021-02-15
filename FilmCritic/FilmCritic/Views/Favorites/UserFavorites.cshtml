@@ -1,0 +1,32 @@
+﻿@model List<Film>
+@{
+    ViewData["Title"] = "User Favorites";
+}
+
+<h1>@ViewData["User"] Favorites</h1>
+
+<div class="container">
+    <div class="row">
+        @{
+            foreach (var film in Model)
+            {
+                <div class="col-3 mt-3" href="/film/detail/?id=@film.Id">
+                    <a class="d-flex align-items-center flex-column" style="color: inherit" href="/film/detail/?id=@film.Id">
+                        <p class="mb-1">@film.Title</p>
+                        <img class="film-poster" src="@(film.Poster != null ? film.Poster : $"/poster/{film.PosterId}")" style="height:250px">
+                    </a>
+                    @{ 
+                        if (ViewData["CurrentUser"].ToString() == "true")
+                        {
+                            <div class="d-flex align-items-center flex-column">
+                                 <form action="/favorites/remove/@film.Id" method="post">
+                                     <input type="submit" value="Remove Film" class="btn btn-danger" />
+                                 </form>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>

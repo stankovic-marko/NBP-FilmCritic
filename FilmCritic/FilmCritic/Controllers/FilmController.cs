@@ -35,6 +35,19 @@ namespace FilmCritic.Controllers
             return View(this);
         }
 
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Edit([FromQuery(Name = "id")] string id)
+        {
+            GetFilm(id);
+            return View(new EditFilmModel() { 
+                Director = Film.Director,
+                Storyline = Film.Storyline,
+                FilmId = Film.Id.ToString(),
+                Title = Film.Title,
+                Year = Film.Year,
+            });
+        }
+
         private void GetFilm(string id)
         {
             Film = new Film();
@@ -83,6 +96,59 @@ namespace FilmCritic.Controllers
             toAdd.PosterId = posterId;
 
             films.InsertOneAsync(toAdd.ToBsonDocument());
+
+            return Redirect("/");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Edit([FromForm] EditFilmModel editFilmModel)
+        {
+
+            var films = _mongoDB.GetCollection<BsonDocument>("films");
+            var posters = _mongoDB.GetCollection<BsonDocument>("posters");
+
+            GetFilm(editFilmModel.FilmId);
+
+            Film.Director = editFilmModel.Director;
+            Film.Storyline = editFilmModel.Storyline;
+            Film.Title = editFilmModel.Title;
+            Film.Year = editFilmModel.Year;
+
+            if (editFilmModel.PosterFile != null)
+            {
+                byte[] posterBytes = new byte[editFilmModel.PosterFile.Length];
+                editFilmModel.PosterFile.OpenReadStream().Read(posterBytes, 0, (int)editFilmModel.PosterFile.Length);
+
+                var posterId = ObjectId.GenerateNewId();
+                var posterToAdd = new PosterModel()
+                {
+                    Image = posterBytes,
+                    Id = posterId,
+                };
+
+                posters.InsertOneAsync(posterToAdd.ToBsonDocument());
+                posters.DeleteOne($"{{_id: ObjectId('{Film.PosterId}')}}");
+                Film.PosterId = posterId;
+            }
+            films.ReplaceOne($"{{_id: ObjectId('{Film.Id}')}}", Film.ToBsonDocument());
+
+            return Redirect("/film/detail?id=" + Film.Id.ToString());
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Delete([FromQuery(Name = "id")] string id)
+        {
+            GetFilm(id);
+            var films = _mongoDB.GetCollection<BsonDocument>("films");
+            var posters = _mongoDB.GetCollection<BsonDocument>("posters");
+            var reviews = _mongoDB.GetCollection<BsonDocument>("reviews");
+            var favorites = _mongoDB.GetCollection<BsonDocument>("favorites");
+            films.DeleteOne($"{{_id: ObjectId('{id}')}}");
+            posters.DeleteMany($"{{_id: ObjectId('{Film.PosterId}')}}");
+            reviews.DeleteMany($"{{FilmId: ObjectId('{Film.Id}')}}");
+            favorites.DeleteMany($"{{FilmId: ObjectId('{Film.Id}')}}");
 
             return Redirect("/");
         }
