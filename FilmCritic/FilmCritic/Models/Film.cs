@@ -24,5 +24,9 @@ namespace FilmCritic.Models
         public string Poster { get; set; }
         [BsonElement("PosterId")]
         public ObjectId PosterId { get; set; }
+        [BsonElement("Positive")]
+        public int Positive { get; set; }
+        [BsonElement("Negative")]
+        public int Negative { get; set; }
     }
 }

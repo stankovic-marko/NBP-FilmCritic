@@ -67,6 +67,7 @@ namespace FilmCritic.Controllers
 
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.Name, toLogin.Id.ToString()),
                 new Claim(ClaimTypes.Email, toLogin.Email),
                 new Claim(ClaimTypes.NameIdentifier, toLogin.Username),
             };

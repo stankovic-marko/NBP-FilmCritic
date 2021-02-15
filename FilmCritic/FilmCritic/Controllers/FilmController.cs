@@ -63,7 +63,9 @@ namespace FilmCritic.Controllers
                 Director = createFilmModel.Director,
                 Storyline = createFilmModel.Storyline,
                 Title = createFilmModel.Title,
-                Year = createFilmModel.Year
+                Year = createFilmModel.Year,
+                Negative = 0,
+                Positive = 0
             };
 
             byte[] posterBytes = new byte[createFilmModel.PosterFile.Length];
@@ -89,8 +91,20 @@ namespace FilmCritic.Controllers
         [Route("poster/{posterId}")]
         public IActionResult Poster(string posterId)
         {
+            ObjectId posterOId;
+            if (!ObjectId.TryParse(posterId, out posterOId))
+            {
+                return NotFound();
+            }
+
             var posters = _mongoDB.GetCollection<BsonDocument>("posters");
             var posterBson = posters.Find($"{{ _id: ObjectId('{posterId}') }}").FirstOrDefault();
+
+            if (posterBson == null)
+            {
+                return NotFound();
+            }
+
             PosterModel poster = BsonSerializer.Deserialize<PosterModel>(posterBson);
 
             return File(poster.Image, "image/jpeg");
