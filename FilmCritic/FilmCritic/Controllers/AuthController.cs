@@ -161,7 +161,7 @@ namespace FilmCritic.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return Ok("izlogovan si");
+            return Redirect("/");
         }
 
         [Authorize]

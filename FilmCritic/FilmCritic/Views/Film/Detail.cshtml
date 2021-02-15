@@ -22,7 +22,7 @@
             </div>
         </div>
         <div>
-            <img src="@Model.Film.Poster" class="img-fluid shadow" alt="Responsive image">
+            <img src="@(@Model.Film.Poster != null ? @Model.Film.Poster : $"/poster/{@Model.Film.PosterId}")" class="img-fluid shadow" alt="Responsive image">
         </div>
     </div>
 </div>

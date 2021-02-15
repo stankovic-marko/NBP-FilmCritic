@@ -17,6 +17,9 @@ namespace FilmCritic.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IMongoDatabase _mongoDB;
 
+        public int FilmsCount { get; set; }
+        public int CurrentPage { get; set; }
+
         [BindProperty]
         public string SearchType { get; set; }
         [BindProperty]
@@ -30,23 +33,21 @@ namespace FilmCritic.Controllers
             _mongoDB = mongoDB;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery(Name = "page")] int page = 1)
         {
-            GetFirstFilms(12);
+            GetFilmsPage(page - 1);
             return View(this);
         }
 
-        private void GetFirstFilms(int v)
+        private void GetFilmsPage(int v)
         {
+            CurrentPage = v;
+            FilmsCount = (int)_mongoDB.GetCollection<BsonDocument>("films").Count(_ => true);
             Films = new List<Film>();
-            var films = _mongoDB.GetCollection<BsonDocument>("films").Find(_ => true).ToList();
-            for (int i = 0; i < v; i++)
+            var films = _mongoDB.GetCollection<BsonDocument>("films").Find(_ => true).Skip(v*8).Limit(8).ToList();
+            foreach (var filmDocument in films)
             {
-                if (i == films.Count)
-                {
-                    break;
-                }
-                Films.Add(BsonSerializer.Deserialize<Film>(films[i]));
+                Films.Add(BsonSerializer.Deserialize<Film>(filmDocument));
             }
         }
 
