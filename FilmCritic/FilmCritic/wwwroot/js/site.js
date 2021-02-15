@@ -12,7 +12,6 @@ function keyDown(event) {
 }
 
 function search() {
-    const type = document.getElementById("searchType").value;
     const keyword = document.getElementById("searchKeyword").value;
-    window.location.href = `/search/?type=${type}&keyword=${keyword}`;
+    window.location.href = `/search/?keyword=${keyword}`;
 }

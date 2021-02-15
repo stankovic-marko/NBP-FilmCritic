@@ -7,7 +7,7 @@
                 <div class="col-3 mt-3" href="/film/detail/?id=@film.Id">
                     <a class="d-flex align-items-center flex-column" style="color: inherit" href="/film/detail/?id=@film.Id">
                         <p class="mb-1">@film.Title</p>
-                        <img class="film-poster" src="@film.Poster" style="height:250px">
+                        <img class="film-poster" src="@(film.Poster != null ? film.Poster : $"/poster/{film.PosterId}")" style="height:250px">
                     </a>
                 </div>
             }

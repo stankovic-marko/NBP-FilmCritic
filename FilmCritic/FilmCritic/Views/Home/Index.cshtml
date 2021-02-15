@@ -3,18 +3,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <div class="row">
-        @{
-            foreach (var film in Model.Films)
-            {
-                <div class="col-3 mt-3" href="/film/detail/?id=@film.Id">
-                    <a class="d-flex align-items-center flex-column" style="color: inherit" href="/film/detail/?id=@film.Id">
-                        <p class="mb-1">@film.Title</p>
-                        <img class="film-poster" src="@film.Poster" style="height:250px">
-                    </a>
-                </div>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <h5>Page:</h5>
+            <nav class="ml-2" aria-label="Page navigation example">
+                <ul class="pagination">
+                    @for (int i = 0; i < (Model.FilmsCount % 8 == 0 ? Model.FilmsCount / 8 : Model.FilmsCount / 8 + 1); i++)
+                    {
+                        if (Model.CurrentPage == i)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link" href="/?page=@(i+1)">@(i+1) <span class="sr-only">@i</span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" href="/?page=@(i+1) ">@(i+1)</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+        <div class="row">
+            @{
+                foreach (var film in Model.Films)
+                {
+                    <div class="col-3 mt-3" href="/film/detail/?id=@film.Id">
+                        <a class="d-flex align-items-center flex-column" style="color: inherit" href="/film/detail/?id=@film.Id">
+                            <p class="mb-1">@film.Title</p>
+                            <img class="film-poster" src="@(film.Poster != null ? film.Poster : $"/poster/{film.PosterId}")" style="height:250px">
+                        </a>
+                    </div>
+                }
             }
-        }
+        </div>
     </div>
-</div>
