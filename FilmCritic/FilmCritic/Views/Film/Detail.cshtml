@@ -5,9 +5,17 @@
 }
 
 <div class="container">
-    <div class="d-flex w-75 pr-5 align-items-center justify-content-between">
-        <h1>@Model.Film.Title</h1>
-        <a href="/review/create/?id=@Model.Film.Id" class="btn btn-link">Write your review</a>
+    <div class="d-flex w-100 pr-5 align-items-center justify-content-between">
+            <h1>@Model.Film.Title</h1>
+            <div>
+                <a class="btn btn-warning" href="/favorites/add/@Model.Film.Id">Add To Favorites</a>
+                <a href="/review/create/?id=@Model.Film.Id" class="btn btn-link">Write your review</a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a href="/film/delete/?id=@Model.Film.Id" class="btn btn-danger">Delete</a>
+                    <a href="/film/edit/?id=@Model.Film.Id" class="btn btn-primary">Edit</a>
+                }
+            </div>
     </div>
     <div class="row mt-3">
         <div class="w-75 pr-5">
