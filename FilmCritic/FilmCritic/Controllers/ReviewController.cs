@@ -16,9 +16,46 @@ namespace FilmCritic.Controllers
     {
         private readonly IMongoDatabase _mongoDB;
 
+        public List<ReviewModel> Reviews;
+        public Film Film;
+        public int ReviewsCount { get; set; }
+        public int CurrentPage { get; set; }
+
         public ReviewController(IMongoDatabase mongoDB)
         {
             _mongoDB = mongoDB;
+        }
+
+        public IActionResult AllReviews([FromQuery(Name = "id")] string filmId, [FromQuery(Name = "page")] int page = 1)
+        {
+            GetReviews(filmId, page - 1);
+            GetFilm(filmId);
+            return View(this);
+        }
+
+        private void GetFilm(string id)
+        {
+            Film = new Film();
+            var films = _mongoDB.GetCollection<BsonDocument>("films");
+            ObjectId o_id = new ObjectId(id);
+            var film = films.Find($"{{ _id: ObjectId('{o_id}')}}").FirstOrDefault();
+            Film = BsonSerializer.Deserialize<Film>(film);
+        }
+
+        private void GetReviews(string filmId, int page)
+        {
+
+            Reviews = new List<ReviewModel>();
+            var reviewsCollection = _mongoDB.GetCollection<BsonDocument>("reviews");
+            ObjectId o_id = new ObjectId(filmId);
+            ReviewsCount = (int) reviewsCollection.Find($"{{ FilmId: ObjectId('{o_id}'), Comment:{{$ne:null}}  }}").Count();
+            CurrentPage = page;
+            var reviewsDocuments = reviewsCollection.Find($"{{ FilmId: ObjectId('{o_id}'), Comment:{{$ne:null}}  }}").Skip(page*5).Limit(5).ToList();
+
+            foreach (var reviewDocument in reviewsDocuments)
+            {
+                Reviews.Add(BsonSerializer.Deserialize<ReviewModel>(reviewDocument));
+            }
         }
 
         public IActionResult Create([FromQuery(Name = "id")] string filmId)

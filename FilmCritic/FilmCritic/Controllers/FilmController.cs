@@ -18,6 +18,7 @@ namespace FilmCritic.Controllers
         private readonly IMongoDatabase _mongoDB;
 
         public Film Film;
+        public List<ReviewModel> Reviews;
 
         public FilmController(ILogger<FilmController> logger, IMongoDatabase mongoDB)
         {
@@ -32,7 +33,21 @@ namespace FilmCritic.Controllers
         public IActionResult Detail([FromQuery(Name = "id")] string id)
         {
             GetFilm(id);
+            GetReviews(id);
             return View(this);
+        }
+
+        private void GetReviews(string id)
+        {
+            Reviews = new List<ReviewModel>();
+            var reviewsCollection = _mongoDB.GetCollection<BsonDocument>("reviews");
+            ObjectId o_id = new ObjectId(id);
+            var reviewsDocuments = reviewsCollection.Find($"{{ FilmId: ObjectId('{o_id}'), Comment:{{$ne:null}}  }}").Limit(3).ToList();
+
+            foreach (var reviewDocument in reviewsDocuments)
+            {
+                Reviews.Add(BsonSerializer.Deserialize<ReviewModel>(reviewDocument));
+            }
         }
 
         private void GetFilm(string id)
@@ -40,7 +55,7 @@ namespace FilmCritic.Controllers
             Film = new Film();
             var films = _mongoDB.GetCollection<BsonDocument>("films");
             ObjectId o_id = new ObjectId(id);
-            var film = films.Find($"{{ _id: ObjectId('{o_id}') }}").FirstOrDefault();
+            var film = films.Find($"{{ _id: ObjectId('{o_id}')}}").FirstOrDefault();
             Film = BsonSerializer.Deserialize<Film>(film);
         }
 
