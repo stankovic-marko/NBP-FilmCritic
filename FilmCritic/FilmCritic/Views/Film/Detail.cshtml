@@ -69,7 +69,7 @@
                     {
                         <div class="w-100 p-3 shadow-sm rounded mt-3" style="background-color: @(review.IsPositive? "#abff9e" : "#ff9e9e")">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="text-secondary">User [Username] said:</h5>
+                                <h5 class="text-secondary">User <a href="/favorites/user/@review.UserId">@review.UserName</a> said:</h5>
                                 <h5 class="text-secondary">@review.Time</h5>
                             </div>
                             <h5>@review.Comment</h5>

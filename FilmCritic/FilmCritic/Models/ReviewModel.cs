@@ -22,8 +22,8 @@ namespace FilmCritic.Models
         [BsonElement("UserId")]
         public ObjectId UserId { get; set; }
 
-        [BsonElement("UserId")]
-        public ObjectId UserName { get; set; }
+        [BsonElement("UserName")]
+        public string UserName { get; set; }
 
         [BsonElement("FilmId")]
         public ObjectId FilmId { get; set; }

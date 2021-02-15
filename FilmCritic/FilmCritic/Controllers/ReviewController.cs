@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FilmCritic.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -119,6 +120,7 @@ namespace FilmCritic.Controllers
                 FilmId = filmId,
                 IsPositive = review.IsPositive,
                 UserId = ObjectId.Parse(userId),
+                UserName = User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value,
                 Time = DateTime.Now
             };
 
